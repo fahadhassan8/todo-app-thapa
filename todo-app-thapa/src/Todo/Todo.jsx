@@ -38,6 +38,11 @@ export const Todo = () => {
     setTask(updatedTask)
   }
 
+  // HandleClearTodoTada btn
+
+  const HandleClearTodoTada = () => {
+    setTask([])
+  }
 
   return (
     <>
@@ -83,6 +88,9 @@ export const Todo = () => {
               );
             })}
           </ul>
+        </section>
+        <section>
+            <button className="clear-btn" onClick={HandleClearTodoTada}>Clear All</button>
         </section>
       </section>
     </>
