@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { MdCheck, MdDeleteForever } from "react-icons/md";
 import "./Todo.css";
+import { TodoDate } from "./TodoDate";
+import TodoItem from "./TodoItem";
 export const Todo = () => {
   const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
-  const [dateTime, setDateTime] = useState();
   const handleInputChange = (value) => {
     setInputValue(value);
   };
@@ -21,36 +22,25 @@ export const Todo = () => {
     setInputValue("");
   };
 
-  // todo date time
-  setInterval(() => {
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString();
-    const formattedTime = now.toLocaleTimeString();
-    setDateTime(`${formattedDate} ${formattedTime}`);
-  }, 1000);
-
   // todo handleDltTodo function
 
   const handleDltTodo = (curTaskVal) => {
     // console.log(task);
     // console.log(curTaskVal);
-    const updatedTask = task.filter((curTask) => curTask !== curTaskVal)
-    setTask(updatedTask)
-  }
+    const updatedTask = task.filter((curTask) => curTask !== curTaskVal);
+    setTask(updatedTask);
+  };
 
   // HandleClearTodoTada btn
 
   const HandleClearTodoTada = () => {
-    setTask([])
-  }
+    setTask([]);
+  };
 
   return (
     <>
       <section className="todo-container">
-        <header>
-          <h1>Todo List</h1>
-          <h3 className="date-time">{dateTime}</h3>
-        </header>
+        <TodoDate />
         <section className="form" onSubmit={handleFormSubmit}>
           <form>
             <div>
@@ -73,24 +63,19 @@ export const Todo = () => {
           <ul>
             {task.map((curTask, i) => {
               return (
-                <li key={i} className="todo-item">
-                  <span>{curTask}</span>
-                  <button className="check-btn">
-                    <MdCheck />
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDltTodo(curTask)}
-                  >
-                    <MdDeleteForever />
-                  </button>
-                </li>
+                <TodoItem
+                  key={i}
+                  data={curTask}
+                  onHandleDltTodo={handleDltTodo}
+                />
               );
             })}
           </ul>
         </section>
         <section>
-            <button className="clear-btn" onClick={HandleClearTodoTada}>Clear All</button>
+          <button className="clear-btn" onClick={HandleClearTodoTada}>
+            Clear All
+          </button>
         </section>
       </section>
     </>
